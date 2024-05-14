@@ -40,20 +40,16 @@ export class AppComponent implements OnInit {
   }
 
   editData(id: number) {
-    const index = id - 1;
-
+    // const index = id - 1;
+    const index = this.formDataStored.findIndex((item: any) => item.id === id);
     const dataToEdit = this.formDataStored[index];
-
     this.form.patchValue(dataToEdit);
   }
 
   deleteData(id: number) {
     // const index = id - 1;
-
     const index = this.formDataStored.findIndex((item: any) => item.id === id);
-
     const confirmation = confirm('Are you sure you want to delete');
-
     if (confirmation) {
       this.formDataStored.splice(index, 1);
       localStorage.setItem('formData', JSON.stringify(this.formDataStored));
@@ -62,16 +58,13 @@ export class AppComponent implements OnInit {
 
   updateName() {
     const updateData = this.form.value;
-
     const index = this.formDataStored.findIndex(
       (dataId: any) => dataId.id === updateData.id
     );
     if (index !== -1) {
       this.formDataStored[index] = updateData;
-
       // Update localStorage
       localStorage.setItem('formData', JSON.stringify(this.formDataStored));
-
       // Clear the form
       this.form.reset();
     }
